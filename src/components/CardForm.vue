@@ -1,64 +1,83 @@
 <template>
-    <div>
-        <div class="form-wrapper">
-            <div class="card-form">
-                <div class="card-form__item">
-                    <label class="card-form__item-label" for="cardNumber">Card Number</label>
-                    <input class="card-form__item-input" oninput="this.value = value.replace(/\D/g, '')" id="cardNumber"  data-card-field
-
-                           autocomplete="off"
-                           maxlength="16">
-                </div>
-                <div class="card-form__item">
-                    <label class="card-form__item-label" for="cardHolder">Card Holders</label>
-                    <input class="card-form__item-input" type='text' id="cardHolder" v-letter-only>
-                </div>
-                <div class="card-form__row">
-                    <div class="card-form__col-date">
-                        <div class="card-form__group">
-                            <label class='card-form__item-label' for="cardMonth">Expiration Date</label>
-                            <select id="cardMonth" class="card-form__item-input">
-                                <option value="" selected disabled>Month</option>
-                                <option
-                                        v-for="n in 12"
-                                        v-bind:value="n < 10 ? '0' + n : n"
-                                        v-bind:key="n">
-                                    {{generateMonthValue(n)}}
-                                </option>
-                            </select>
-                            <select id="cardYear" class="card-form__item-input">
-                                <option selected disabled>Year</option>
-                                <option v-bind:value="$index + minCardYear"
-                                        v-for="(n, $index) in 12"
-                                        v-bind:key="n">
-                                    {{ $index + cardYear }}
-                                </option>
-                            </select>
-
-                        </div>
-                    </div>
-                    <div class="card-form__col-CVV">
-                        <div class="card-form__item">
-                            <label class='card-form__item-label' for="cardCVV">CVV</label>
-                            <input class="card-form__item-input" type="text" id="cardCVV" maxlength="4"
-                                   v-number-only
-                                   @input="changeCvv">
-                        </div>
-                    </div>
-                </div>
-                <button class="card-form__button">
-                    Submit
-                </button>
-            </div>
+    <div class="form-content">
+        <div class="card-wrapper">
+            <Card
+                    :fields="fields"
+                    :labels="formData"
+                    :isCardNumberMasked="isCardNumberMasked"
+            />
         </div>
+        <div class="card-form">
+            <div class="card-form__field">
+                <label class="card-form__field-label" for="fields.cardNumber">Card Number</label>
+                <input
+                        id="fields.cardNumber"
+                        class="card-form__field-input"
+                        @input="changeNumber"
+                        v-model="formData.cardNumber"
+                        maxlength="19"
+                >
+            </div>
+            <div class="card-form__field">
+                <label class="card-form__field-label" for="cardHolder">Card Holders</label>
+                <input class="card-form__field-input" type='text' id="cardHolder" v-model="formData.cardName"
+                       v-letter-only>
+            </div>
+            <div class="card-form__row">
+                <div class="card-form__col-date">
+                    <div class="card-form__group">
+                        <label class='card-form__field-label' for="cardMonth">Expiration Date</label>
+                        <select id="cardMonth" class="card-form__field-input" v-model="formData.cardMonth">
+                            <option value="" selected disabled>Month</option>
+                            <option
+                                    v-for="n in 12"
+                                    v-bind:value="n < 10 ? '0' + n : n"
+                                    v-bind:key="n">
+                                {{generateMonthValue(n)}}
+                            </option>
+                        </select>
+                        <label style="display: none" for="cardYear"></label>
+                        <select id="cardYear" class="card-form__field-input" v-model="formData.cardYear"
+                                data-card-field>
+                            <option value="" selected disabled>Year</option>
+                            <option v-bind:value="index + minCardYear" v-for="(n, index) in 5" v-bind:key="n">
+                                {{index + minCardYear}}
+                            </option>
+                        </select>
+
+                    </div>
+                </div>
+                <div class="card-form__col-CVV">
+                    <div class="card-form__field">
+                        <label class='card-form__field-label' for="cardCVV" data-card-field>CVV</label>
+                        <input class="card-form__field-input"
+                               v-model="formData.cardCvv"
+                               type="text"
+
+                               id="cardCVV" maxlength="4"
+                               v-number-only
+                        >
+                    </div>
+                </div>
+            </div>
+            <!--            @click="persistCardData"-->
+            <button class="card-form__button">
+                Save
+            </button>
+        </div>
+
     </div>
-
-
 </template>
 
 <script>
+    import Card from "@/components/Card";
+
+
     export default {
-        name: "CardForm",
+        name: 'CardForm',
+        components: {
+            Card
+        },
         directives: {
             'number-only': {
                 bind(el) {
@@ -99,78 +118,84 @@
                     }
                 }
             },
-            backgroundImage: [String, Object],
-            randomBackgrounds: {
-                type: Boolean,
-                default: true
-            }
         },
         data() {
             return {
                 fields: {
-                    cardNumber: 'v-card-number',
-                    cardCvv: 'v-card-cvv'
+                    cardNumber: '',
+                    cardName: '',
+                    cardMonth: '',
+                    cardYear: '',
+                    cardCvv: ''
                 },
-                cardYear: new Date().getFullYear()
+                isCardFlipped: false,
+                isCardNumberMasked: true,
+                minCardYear: new Date().getFullYear()
             }
-
         },
+
         methods: {
             generateMonthValue(n) {
                 return n < 10 ? `0${n}` : n
             },
-            changeNumber(e) {
-                this.formData.cardNumber = e.target.value;
-                this.formData.cardNumber.replace(/\d/g, '');
-                // regular cc number, 16 digits
 
-                this.$emit('input-card-number', this.formData.cardNumber)
+            changeNumber(e) {
+                this.formData.cardNumber = e.target.value
+                let noDigits = this.formData.cardNumber.replace(/\D/g, '')
+                this.formData.cardNumber = noDigits.replace(/(\d{4})/, '$1 ').replace(/(\d{4}) (\d{4})/, '$1 $2 ').replace(/(\d{4}) (\d{4}) (\d{4})/, '$1 $2 $3 ')
+
             }
+            // persistCardData() {
+            //     const parsed = JSON.stringify(this.formData)
+            //     localStorage.setItem('bank-card-info', parsed)
+            //     this.formData = '';
+            // }
+
         }
     }
-
 </script>
 
-<style lang="scss" scoped>
-    .form-wrapper {
-        display: flex;
+<style lang="scss">
 
+    .form-content {
+        max-width: 570px;
         width: 100%;
-        padding: 50px 15px;
+        margin: auto;
+    }
+
+    .card-wrapper {
+        margin-bottom: -130px;
     }
 
     .card-form {
         display: flex;
         flex-direction: column;
 
-        max-width: 570px;
-        width: 100%;
-        margin: auto;
         padding: 35px;
         @media screen and (max-width: 576px) {
             margin: 0 auto;
         }
-        /*padding-top: 180px; // Отсуп для карточки*/
+        padding-top: 180px; // Отступ для карточки
         @media screen and (max-width: 520px) {
             padding: 25px;
-            /*padding-top: 165px; // Отсуп для карточки */
+            padding-top: 165px; // Отступ для карточки
         }
         @media screen and (max-width: 360px) {
             padding: 15px;
-            /*padding-top: 165px; // Отсуп для карточки */
+            padding-top: 165px; // Отступ для карточки
         }
         background: #fff;
         border-radius: 10px;
     }
 
-    .card-form__item {
+    .card-form__field {
         display: flex;
         flex-direction: column;
 
         margin-bottom: 20px;
     }
 
-    .card-form__item-label {
+    .card-form__field-label {
         width: 100%;
         margin-bottom: 5px;
 
@@ -179,7 +204,7 @@
         color: $font-color;
     }
 
-    .card-form__item-input {
+    .card-form__field-input {
         height: 50px;
 
         padding: 5px 15px;
@@ -216,7 +241,6 @@
             .card-form__group {
                 display: flex;
                 flex-wrap: wrap;
-                align-items: flex-start;
 
                 select {
                     flex-grow: 1;
