@@ -25,21 +25,11 @@
                 <td>Students</td>
                 <td>dcode</td>
             </tr>
-            <tr>
-                <td>3</td>
-                <td>Nick</td>
-                <td>52,300</td>
-                <td>dcode</td>
-                <td>dcode</td>
-            </tr>
             </tbody>
-
         </table>
-        <router-link :to="/card-form">
             <button class="link-to-form">
                 Add Your Data
             </button>
-        </router-link>
     </div>
 </template>
 

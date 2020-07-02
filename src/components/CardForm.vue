@@ -72,7 +72,6 @@
 <script>
     import Card from "@/components/Card";
 
-
     export default {
         name: 'CardForm',
         components: {
@@ -184,7 +183,7 @@
             padding: 15px;
             padding-top: 165px; // Отступ для карточки
         }
-        background: #fff;
+        background: #ffffff;
         border-radius: 10px;
     }
 

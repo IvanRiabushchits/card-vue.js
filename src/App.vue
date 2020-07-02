@@ -1,23 +1,21 @@
 <template>
     <div id="app" class="form-wrapper">
-        <keep-alive>
-            <router-view></router-view>
-        </keep-alive>
-        <!--    <CardForm />-->
-        <!--    <CardDataTable />-->
+
+            <CardForm />
+            <CardDataTable />
     </div>
 </template>
 
 <script>
-    // import CardForm from "@/components/CardForm";
-    // import CardDataTable from "@/components/CardDataTable";
+    import CardForm from "@/components/CardForm";
+    import CardDataTable from "@/components/CardDataTable";
 
 
     export default {
         name: 'App',
         components: {
-            // CardDataTable
-            // CardForm
+            CardDataTable,
+            CardForm
         },
         methods: {
             // persistCardData() {

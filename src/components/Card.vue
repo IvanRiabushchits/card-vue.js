@@ -15,8 +15,8 @@
                     </div>
                 </div>
 
-                <div class="card-item__number">
-                    <div v-for="(n, index) in defaultPlaceholder" :key="index">
+                <label class="card-item__number">
+                    <span v-for="(n, index) in defaultPlaceholder" :key="index">
                         <div class="card-item__numberItem" v-if="getIsNumberMasked(index, n)">*</div>
                         <div
                                 class="card-item__numberItem"
@@ -30,10 +30,10 @@
                                 v-else
                                 :key="defaultPlaceholder"
                         >{{n}}</div>
-                    </div>
-                </div>
+                    </span>
+                </label>
                 <div class="card-item__content">
-                    <div class="card-item__info">
+                    <label class="card-item__info">
                         <div class="card-item__holder">Card Holder</div>
 
                         <div class="card-item__name" v-if="labels.cardName.length">
@@ -45,7 +45,7 @@
                                 </span>
                         </div>
                         <span class="card-item__name" v-else>Full Name</span>
-                    </div>
+                    </label>
                     <div class="card-item__date">
                         <label :for="labels.cardMonth" class="card-item__dateTitle">Expires</label>
                         <label class="card-item__dateItem">
@@ -65,7 +65,7 @@
         </div>
         <div class="card-item__side -back">
             <div class="card-item__cover">
-                <img class="card-item__bg" src="..\assets\images\card_bg.jpeg" alt="">
+                <img class="card-item__bg" src="..\assets\images\card_bg.jpeg">
             </div>
             <div class="card-item__band"></div>
             <div class="card-item__cvv">
@@ -356,7 +356,7 @@
             display: inline-flex;
             min-width: 8px;
 
-            font-family: "Source Sans Pro", sans-serif;
+            font-family: font-stack;
             text-transform: capitalize;
             position: relative;
         }

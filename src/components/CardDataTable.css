@@ -1,9 +1,9 @@
 /* Error: expected "{".
  *     ,
- * 121 | </style>
+ * 111 | </style>
  *     |         ^
  *     '
- *   carddatatable.vue 121:9  root stylesheet */
+ *   carddatatable.vue 111:9  root stylesheet */
 
 body::before {
   font-family: "Source Code Pro", "SF Mono", Monaco, Inconsolata, "Fira Mono",
@@ -13,5 +13,5 @@ body::before {
   padding: 1em;
   margin-bottom: 1em;
   border-bottom: 2px solid black;
-  content: 'Error: expected "{".\a     \2577 \a 121 \2502  </style>\a     \2502          ^\a     \2575 \a   carddatatable.vue 121:9  root stylesheet';
+  content: 'Error: expected "{".\a     \2577 \a 111 \2502  </style>\a     \2502          ^\a     \2575 \a   carddatatable.vue 111:9  root stylesheet';
 }
