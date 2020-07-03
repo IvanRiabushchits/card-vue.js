@@ -1,34 +1,27 @@
 <template>
     <div class="table-wrapper">
         <table class="content-table">
-            <thead>
-            <tr class="active-row">
-                <th>№</th>
-                <th>Card Holder</th>
-                <th>Last 4 Digits</th>
-                <th>Date of Expire</th>
-                <th>Card Type</th>
+            <thead class="content-table__head">
+            <tr class="active-row content-table__head-row">
+                <th class='content-table__head-cell'>№</th>
+                <th class='content-table__head-cell'>Card Holder</th>
+                <th class='content-table__head-cell'>Last 4 Digits</th>
+                <th class='content-table__head-cell'>Date of Expire</th>
+                <th class='content-table__head-cell'>Card Type</th>
             </tr>
             </thead>
-            <tbody>
-            <tr class="active-row">
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr class="active-row">
-                <td>2</td>
-                <td>Sally</td>
-                <td>72,400</td>
-                <td>Students</td>
-                <td>dcode</td>
+            <tbody class="content-table__data">
+            <tr class="content-table__data-row content-table__data-row--active">
+                <td class='content-table__data-cell'>1</td>
+                <td class='content-table__data-cell'></td>
+                <td class='content-table__data-cell'></td>
+                <td class='content-table__data-cell'></td>
+                <td class='content-table__data-cell'></td>
             </tr>
             </tbody>
         </table>
         <router-link to="/cardForm">
-            <button class="link-to-form">
+            <button class="content-table__button link-to-form">
                 Add Your Data
             </button>
         </router-link>
@@ -37,7 +30,8 @@
 
 <script>
     export default {
-        name: "CardDataTable"
+        name: "CardDataTable",
+        methods: {}
     }
 </script>
 

@@ -1,0 +1,356 @@
+.card-item {
+  position: relative;
+  z-index: 2;
+
+  max-width: 420px;
+  width: 100%;
+  margin: 0 auto;
+  height: 270px;
+  @media screen and (max-width: 520px) {
+    max-width: 330px;
+    width: 90%;
+    height: 200px;
+
+  }
+  &:hover {
+    .card-item__side {
+      &.-front {
+        transform: rotateY(180deg);
+      }
+
+      &.-back {
+        transform: rotateY(0);
+      }
+    }
+  }
+
+  &__side {
+    height: 100%;
+
+    border-radius: 15px;
+    overflow: hidden;
+    backface-visibility: hidden;
+
+    transform: rotateY(0deg);
+    transform-style: preserve-3d;
+    transition: all 0.8s cubic-bezier(0.70, 0.03, 0.50, 0.80);
+
+    &.-back {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 2;
+
+      width: 100%;
+      height: 100%;
+      padding: 0;
+
+      transform: rotateY(-180deg);
+      backface-visibility: hidden;
+
+      .card-item__cover {
+        transform: rotateY(-180deg);
+      }
+    }
+  }
+
+  &__cover {
+    position: absolute;
+    left: 0;
+    top: 0;
+
+    width: 100%;
+    height: 100%;
+
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  &__cover--gradient {
+    background: rgb(35, 100, 210);
+    background: linear-gradient(90deg, rgba(35, 100, 210, 1) 0%, rgba(15, 14, 134, 1) 100%, rgba(0, 212, 255, 1) 100%);
+  }
+
+
+  &__inner {
+    position: relative;
+    z-index: 4;
+
+    height: 100%;
+    padding: 25px 15px;
+
+    @media screen and (max-width: 520px) {
+      padding: 20px 10px;
+    }
+  }
+
+  &__top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    margin-bottom: 40px;
+    padding: 0 10px;
+    @media screen and (max-width: 520px) {
+      margin-bottom: 25px;
+    }
+    @media screen and (max-width: 360px) {
+      margin-bottom: 15px;
+    }
+  }
+
+  &__chip {
+    width: 60px;
+    @media screen and (max-width: 520px) {
+      width: 50px;
+    }
+    @media screen and (max-width: 360px) {
+      width: 40px;
+    }
+  }
+
+  &__type {
+    position: relative;
+
+    display: flex;
+    justify-content: flex-end;
+
+    max-width: 100px;
+    width: 100%;
+    height: 45px;
+    margin-left: auto;
+    @media screen and (max-width: 520px) {
+      max-width: 90px;
+      height: 40px;
+    }
+    @media screen and (max-width: 360px) {
+      height: 30px;
+    }
+  }
+
+  &__typeImg {
+    max-width: 100%;
+    max-height: 100%;
+
+    object-fit: contain;
+    object-position: top right;
+  }
+
+  &__number {
+    display: inline-block;
+
+    margin-bottom: 25px;
+    padding: 10px 15px;
+
+    font-size: 27px;
+    font-family: "Source Sans Pro", sans-serif;
+    font-weight: 500;
+    color: #fff;
+    line-height: 1;
+
+    cursor: pointer;
+    @media screen and (max-width: 520px) {
+      margin-bottom: 15px;
+      padding: 10px 10px;
+      font-size: 21px;
+    }
+
+    @media screen and (max-width: 360px) {
+      margin-bottom: 10px;
+      padding: 10px 10px;
+      font-size: 19px;
+    }
+  }
+
+  &__numberItem {
+    display: inline-block;
+    width: 16px;
+
+    font-family: "Source Sans Pro", sans-serif;;
+
+    &.-active {
+      width: 30px;
+    }
+
+    @media screen and (max-width: 520px) {
+      width: 13px;
+
+      &.-active {
+        width: 16px;
+      }
+    }
+
+    @media screen and (max-width: 360px) {
+      width: 12px;
+
+    }
+    @media screen and (max-width: 320px) {
+      width: 9px;
+
+    }
+  }
+
+  &__content {
+    display: flex;
+    align-items: flex-start;
+
+    color: #fff;
+  }
+
+  &__info {
+    display: block;
+
+    max-width: calc(100% - 85px);
+    width: 100%;
+    padding: 10px 15px;
+
+    font-weight: 500;
+    color: #fff;
+
+    cursor: pointer;
+    @media screen and (max-width: 520px) {
+      padding: 10px;
+    }
+  }
+
+  &__holder {
+    margin-bottom: 6px;
+
+    font-size: 13px;
+    opacity: 0.7;
+    @media screen and (max-width: 520px) {
+      margin-bottom: 5px;
+
+      font-size: 12px;
+    }
+  }
+
+  &__name {
+    max-width: 100%;
+
+    font-size: 18px;
+    line-height: 1;
+    white-space: nowrap;
+
+    text-overflow: ellipsis;
+    text-transform: uppercase;
+    overflow: hidden;
+    @media screen and (max-width: 520px) {
+      font-size: 16px;
+    }
+  }
+
+  &__nameItem {
+    display: inline-flex;
+    min-width: 8px;
+
+    font-family: "Source Sans Pro", sans-serif;;
+    text-transform: capitalize;
+    position: relative;
+  }
+
+  &__date {
+    display: flex;
+    flex-wrap: wrap;
+    flex-shrink: 0;
+
+    width: 80px;
+    margin-left: auto;
+    padding: 10px;
+
+    font-size: 18px;
+    white-space: nowrap;
+
+    cursor: pointer;
+
+    @media screen and (max-width: 520px) {
+      font-size: 16px;
+    }
+  }
+
+  &__dateTitle {
+    width: 100%;
+    padding-bottom: 6px;
+
+    font-size: 13px;
+    opacity: 0.7;
+    @media screen and (max-width: 520px) {
+      font-size: 12px;
+      padding-bottom: 5px;
+    }
+  }
+
+  &__band {
+    position: relative;
+    z-index: 2;
+
+    width: 100%;
+    height: 50px;
+    margin-top: 30px;
+
+    background: rgba(0, 0, 19, 0.8);
+
+    @media screen and (max-width: 480px) {
+      margin-top: 20px;
+    }
+    @media screen and (max-width: 360px) {
+      height: 40px;
+      margin-top: 10px;
+    }
+  }
+
+  &__cvv {
+    position: relative;
+    z-index: 2;
+
+    padding: 15px;
+
+    text-align: right;
+    .card-item__type {
+      opacity: 0.7;
+    }
+
+    @media screen and (max-width: 360px) {
+      padding: 10px 15px;
+    }
+  }
+
+  &__cvvTitle {
+    margin-bottom: 5px;
+    padding-right: 10px;
+
+    font-size: 15px;
+    font-weight: 500;
+    color: #fff;
+  }
+
+  &__cvvBand {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    height: 45px;
+    margin-bottom: 30px;
+    padding-right: 10px;
+
+    font-size: 18px;
+    color: #1a3b5d;
+
+    background: #fff;
+    text-align: right;
+
+    border-radius: 4px;
+    box-shadow: 0 10px 20px -7px rgba(32, 56, 117, 0.35);
+
+    @media screen and (max-width: 520px) {
+      height: 40px;
+      margin-bottom: 20px;
+    }
+
+    @media screen and (max-width: 360px) {
+      margin-bottom: 15px;
+    }
+  }
+}
+
+

@@ -60,12 +60,12 @@
                     </div>
                 </div>
             </div>
-            <!--            @click="persistCardData"-->
-            <button class="card-form__button">
+            <router-link to="">
+            <button @click="persistCardData" class="card-form__button">
                 Save
             </button>
+            </router-link>
         </div>
-
     </div>
 </template>
 
@@ -87,7 +87,6 @@
                         }
                         event.preventDefault()
                     }
-
                     el.addEventListener('keypress', checkValue)
                 }
             },
@@ -143,143 +142,14 @@
                 let noDigits = this.formData.cardNumber.replace(/\D/g, '')
                 this.formData.cardNumber = noDigits.replace(/(\d{4})/, '$1 ').replace(/(\d{4}) (\d{4})/, '$1 $2 ').replace(/(\d{4}) (\d{4}) (\d{4})/, '$1 $2 $3 ')
 
+            },
+            persistCardData() {
+                const parsed = JSON.stringify(this.formData)
+                localStorage.setItem('bank-card-info', parsed)
+                this.formData = '';
+                alert("Ваши данные сохранены")
             }
-            // persistCardData() {
-            //     const parsed = JSON.stringify(this.formData)
-            //     localStorage.setItem('bank-card-info', parsed)
-            //     this.formData = '';
-            // }
 
         }
     }
 </script>
-
-<style lang="scss">
-
-    .form-content {
-        max-width: 570px;
-        width: 100%;
-        margin: auto;
-    }
-
-    .card-wrapper {
-        margin-bottom: -130px;
-    }
-
-    .card-form {
-        display: flex;
-        flex-direction: column;
-
-        padding: 35px;
-        @media screen and (max-width: 576px) {
-            margin: 0 auto;
-        }
-        padding-top: 180px; // Отступ для карточки
-        @media screen and (max-width: 520px) {
-            padding: 25px;
-            padding-top: 165px; // Отступ для карточки
-        }
-        @media screen and (max-width: 360px) {
-            padding: 15px;
-            padding-top: 165px; // Отступ для карточки
-        }
-        background: #ffffff;
-        border-radius: 10px;
-    }
-
-    .card-form__field {
-        display: flex;
-        flex-direction: column;
-
-        margin-bottom: 20px;
-    }
-
-    .card-form__field-label {
-        width: 100%;
-        margin-bottom: 5px;
-
-        font-size: 14px;
-        font-weight: 500;
-        color: $font-color;
-    }
-
-    .card-form__field-input {
-        height: 50px;
-
-        padding: 5px 15px;
-
-        font-size: 18px;
-        color: $font-color;
-
-        border: 1px solid #ced6e0;
-        border-radius: 5px;
-        background: none;
-        box-shadow: none;
-
-        &:hover,
-        &:focus {
-            border-color: #3d9cff;
-        }
-    }
-
-    /*Expiration date + CVV*/
-    .card-form__row {
-        display: flex;
-        @media screen and (max-width: 520px) {
-            flex-direction: column;
-            flex-wrap: wrap;
-        }
-
-        .card-form__col-date {
-            flex: auto;
-            margin-right: 35px;
-            @media screen and (max-width: 520px) {
-                margin-right: 0;
-            }
-
-            .card-form__group {
-                display: flex;
-                flex-wrap: wrap;
-
-                select {
-                    flex-grow: 1;
-                    /*max-width: 150px;*/
-                }
-            }
-
-            select:last-child {
-                margin-left: 15px;
-
-            }
-        }
-    }
-
-    .card-form__col-CVV {
-        max-width: 150px;
-        @media screen and (max-width: 520px) {
-            max-width: initial;
-            margin-top: 20px;
-        }
-    }
-
-
-    .card-form__button {
-        width: 100%;
-        height: 55px;
-
-        margin-top: 20px;
-
-        font-size: 22px;
-        font-weight: 500;
-        font-family: $font-stack;
-        color: #fff;
-
-        background: #2364d2;
-        border: none;
-        border-radius: 5px;
-        box-shadow: 3px 10px 20px 0 rgba(35, 100, 210, 0.3);
-
-        cursor: pointer;
-    }
-
-</style>
