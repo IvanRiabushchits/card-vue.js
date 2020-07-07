@@ -60,16 +60,16 @@
                     </div>
                 </div>
             </div>
-            <router-link to="">
+            <router-link to="/">
                 <button @click="persistCardData" class="card-form__button">
                     Save
                 </button>
             </router-link>
-            <div class="card-form__modal">
-                <div class="card-form__modal-box">
-                    <p>Ваши данные сохранены</p>
-                </div>
-            </div>
+<!--            <div class="card-form__modal">-->
+<!--                <div class="card-form__modal-box">-->
+<!--                    <p>Ваши данные сохранены</p>-->
+<!--                </div>-->
+<!--            </div>-->
         </div>
     </div>
 </template>
@@ -143,11 +143,13 @@
                 this.formData.cardNumber = onlyDigits.replace(/(\d{4})/, '$1 ').replace(/(\d{4}) (\d{4})/, '$1 $2 ').replace(/(\d{4}) (\d{4}) (\d{4})/, '$1 $2 $3 ')
 
             },
+            // validateFormData(){
+            //
+            // },
             persistCardData() {
                     this.bankCards.push(this.formData);
                     let parsed = JSON.stringify(this.bankCards);
                     localStorage.setItem('bank-card-info', parsed)
-                    alert('Ваши данные сохранены!')
             },
 
         },

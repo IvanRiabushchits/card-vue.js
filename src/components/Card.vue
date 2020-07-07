@@ -38,7 +38,7 @@
                         <div class="card-item__name" v-if="labels.cardName.length">
                                 <span
                                         class="card-item__nameItem"
-                                        v-for="(n, index) in labels.cardName.replace(/\s\s+/g, ' ')"
+                                        v-for="(n, index) in labels.cardName.replace(/\s\s+/g, '')"
                                         :key="index"
                                 >{{n}}
                                 </span>
