@@ -53,7 +53,7 @@
                         <input class="card-form__field-input"
                                v-model="formData.cardCvv"
                                type="text"
-
+                               data-card-cvv
                                id="cardCVV" maxlength="4"
                                v-number-only
                         >
@@ -61,10 +61,15 @@
                 </div>
             </div>
             <router-link to="">
-            <button @click="persistCardData" class="card-form__button">
-                Save
-            </button>
+                <button @click="persistCardData" class="card-form__button">
+                    Save
+                </button>
             </router-link>
+            <div class="card-form__modal">
+                <div class="card-form__modal-box">
+                    <p>Ваши данные сохранены</p>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -87,6 +92,7 @@
                         }
                         event.preventDefault()
                     }
+
                     el.addEventListener('keypress', checkValue)
                 }
             },
@@ -119,14 +125,8 @@
         },
         data() {
             return {
-                fields: {
-                    cardNumber: '',
-                    cardName: '',
-                    cardMonth: '',
-                    cardYear: '',
-                    cardCvv: ''
-                },
-                isCardFlipped: false,
+                bankCards: [],
+                prevData: null,
                 isCardNumberMasked: true,
                 minCardYear: new Date().getFullYear()
             }
@@ -139,17 +139,24 @@
 
             changeNumber(e) {
                 this.formData.cardNumber = e.target.value
-                let noDigits = this.formData.cardNumber.replace(/\D/g, '')
-                this.formData.cardNumber = noDigits.replace(/(\d{4})/, '$1 ').replace(/(\d{4}) (\d{4})/, '$1 $2 ').replace(/(\d{4}) (\d{4}) (\d{4})/, '$1 $2 $3 ')
+                let onlyDigits = this.formData.cardNumber.replace(/\D/g, '')
+                this.formData.cardNumber = onlyDigits.replace(/(\d{4})/, '$1 ').replace(/(\d{4}) (\d{4})/, '$1 $2 ').replace(/(\d{4}) (\d{4}) (\d{4})/, '$1 $2 $3 ')
 
             },
             persistCardData() {
-                const parsed = JSON.stringify(this.formData)
-                localStorage.setItem('bank-card-info', parsed)
-                this.formData = '';
-                alert("Ваши данные сохранены")
-            }
+                    this.bankCards.push(this.formData);
+                    let parsed = JSON.stringify(this.bankCards);
+                    localStorage.setItem('bank-card-info', parsed)
+                    alert('Ваши данные сохранены!')
+            },
 
+        },
+        mounted() {
+            if (localStorage.getItem('bank-card-info') !== null) {
+                this.prevData = JSON.parse(localStorage.getItem('bank-card-info'))
+                this.bankCards = this.bankCards.concat(this.prevData)
+            }
         }
     }
+
 </script>

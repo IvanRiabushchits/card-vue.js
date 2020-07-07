@@ -1,5 +1,5 @@
 <template>
-    <div class="card-item">
+    <div class="card-item" :class="{'-active': isFocused }">
         <div class="card-item__side -front">
             <div
                     class="card-item__focus"
@@ -16,7 +16,6 @@
 
                 <label class="card-item__number">
                     <span v-for="(n, index) in defaultPlaceholder" :key="index">
-                         <transition name="slide-fade-up">
                         <div class="card-item__numberItem" v-if="getIsNumberMasked(index, n)">*</div>
                         <div
                                 class="card-item__numberItem"
@@ -30,7 +29,6 @@
                                 v-else
                                 :key="defaultPlaceholder"
                         >{{n}}</div>
-                        </transition>
                     </span>
                 </label>
                 <div class="card-item__content">
@@ -86,41 +84,28 @@
         props: {
             labels: Object,
             isCardNumberMasked: Boolean,
-            isCardFlipped: Boolean
         },
         data() {
             return {
-                defaultPlaceholder: "#### #### #### ####"
+                defaultPlaceholder: "#### #### #### ####",
+                isFocused: false,
             }
         },
         methods: {
             getIsNumberMasked(index, n) {
                 return index > 4 && index < 14 && this.labels.cardNumber.length > index && n.trim() !== '' && this.isCardNumberMasked
             }
+        },
+        mounted() {
+            let fieldCVV = document.querySelector('[data-card-cvv]');
+            fieldCVV.addEventListener('focus', () => {
+                this.isFocused = true;
+            })
+            fieldCVV.addEventListener('blur', () => {
+                this.isFocused = false;
+            })
         }
+
     }
 
 </script>
-1
-<style scoped lang="scss">
-    .slide-fade-up-enter-active {
-        transition: all 0.25s ease-in-out;
-        transition-delay: 0.1s;
-        position: relative;
-    }
-    .slide-fade-up-leave-active {
-        transition: all 0.25s ease-in-out;
-        position: absolute;
-    }
-    .slide-fade-up-enter {
-        opacity: 0;
-        transform: translateY(15px);
-        pointer-events: none;
-    }
-    .slide-fade-up-leave-to {
-        opacity: 0;
-        transform: translateY(-15px);
-        pointer-events: none;
-    }
-
-</style>

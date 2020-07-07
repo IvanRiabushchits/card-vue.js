@@ -1,8 +1,14 @@
 // ПЕРЕМЕННЫЕ
 @import "variables";
 
-// СТИЛИ ДЛЯ КОМПОНЕНТОВ
+// АНИМАЦИИ
 @import "./styles/vue-animation";
+
+// МОДАЛЬНОЕ ОКНО
+@import "./styles/modal-box";
+
+// КОМПОНЕНТЫ
+
 @import "./styles/app";
 @import "./styles/cardDataTable";
 @import "./styles/cardForm";

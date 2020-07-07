@@ -120,4 +120,8 @@
   box-shadow: 3px 10px 20px 0 rgba(35, 100, 210, 0.3);
 
   cursor: pointer;
+
+  -webkit-transition: 0.3s ease;
+  transition: 0.3s ease;
+  -webkit-appearance: none;
 }
